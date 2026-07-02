@@ -41,7 +41,7 @@ def initialize_rag_engine():
         logger.info(f"Building FAISS index for {len(catalog_data)} catalog items...")
         
         # Format text for semantic embedding
-        catalog_texts = [f"{item.get('name', '')} - {item.get('desc', '')}" for item in catalog_data]
+        catalog_texts = [f"{item.get('name', '')} - {item.get('description', '')}" for item in catalog_data]
         embeddings = encoder.encode(catalog_texts)
         index.add(np.array(embeddings))
         
@@ -73,7 +73,7 @@ def search_catalog(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
             if idx != -1 and idx < len(catalog_data):
                 # Strip the description before sending to the LLM to save tokens and speed up inference
                 item = catalog_data[idx].copy()
-                item.pop("desc", None) 
+                item.pop("description", None)
                 results.append(item)
                 
         return results
