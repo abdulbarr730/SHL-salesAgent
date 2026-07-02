@@ -5,6 +5,15 @@ from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 from agent import process_chat
 
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+
+app = FastAPI()
+
+@app.get("/")
+async def root_redirect():
+    return RedirectResponse(url="/docs")
+
 # Configure logging to monitor agent behavior
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
